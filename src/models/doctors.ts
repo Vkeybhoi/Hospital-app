@@ -10,6 +10,7 @@ interface DoctorsAtrributes extends Document{
     specialisation: string;
     gender: string;
     phoneNumber: string;
+    reports: Report[];
 };
 
 const doctorsSchema = new Schema({
@@ -31,17 +32,20 @@ const doctorsSchema = new Schema({
         type: String,
         required: true,
     },
+    gender: {
+        type: String,
+        required: true
+    },
     phoneNumber:{
         type: String,
         required: true,
     },
-} , {timestamps: true});
+    reports: [{
+        type: Schema.Types.ObjectId,
+        ref: "Report",
 
-doctorsSchema.virtual("reports", {
-    ref: "Report",
-    localField: "id",
-    foreignField: "doctorId",
-});
+    }]
+} , {timestamps: true});
 
 doctorsSchema.pre('save', async function (next) {
     const doctor = this;

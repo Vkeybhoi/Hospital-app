@@ -13,8 +13,9 @@ const dotenv_1 = require("dotenv");
 (0, dotenv_1.config)();
 // console.log(process.env.MONGO_URL)
 (0, config_1.default)();
-const index_1 = __importDefault(require("./routes/index"));
-const users_1 = __importDefault(require("./routes/users"));
+const report_1 = __importDefault(require("./routes/report"));
+const doctors_1 = __importDefault(require("./routes/doctors"));
+const page_1 = __importDefault(require("./routes/page"));
 const app = (0, express_1.default)();
 // Connect to MongoDB
 // mongoose.connect(config.mongo.url, {retryWrites: true, w: "majority"})
@@ -25,15 +26,16 @@ const app = (0, express_1.default)();
 //         console.log("Not Connected to MongoDB ERROR! ", err);
 //     });
 // view engine setup
-app.set('views', path_1.default.join(__dirname, 'views'));
+app.set('views', path_1.default.join(__dirname, '../views'));
 app.set('view engine', 'ejs');
 app.use((0, morgan_1.default)('dev'));
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use((0, cookie_parser_1.default)());
-app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
-app.use('/', index_1.default);
-app.use('/users', users_1.default);
+app.use(express_1.default.static(path_1.default.join(__dirname, '../public')));
+app.use('/report', report_1.default);
+app.use('/users', doctors_1.default);
+app.use('/', page_1.default);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     next((0, http_errors_1.default)(404));

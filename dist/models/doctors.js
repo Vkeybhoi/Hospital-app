@@ -49,16 +49,19 @@ const doctorsSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
+    gender: {
+        type: String,
+        required: true
+    },
     phoneNumber: {
         type: String,
         required: true,
     },
+    reports: [{
+            type: mongoose_1.Schema.Types.ObjectId,
+            ref: "Report",
+        }]
 }, { timestamps: true });
-doctorsSchema.virtual("reports", {
-    ref: "Report",
-    localField: "id",
-    foreignField: "doctorId",
-});
 doctorsSchema.pre('save', async function (next) {
     const doctor = this;
     if (!doctor.isModified('password')) {
